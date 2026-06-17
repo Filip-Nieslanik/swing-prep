@@ -1,4 +1,12 @@
+# IDE
 .idea/
 *.iml
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Lokální studijní materiály – nepatří do repozitáře
+Dokumenty/
+otazky-a-testy/
+transkripce/
