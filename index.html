@@ -5,26 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cvičný test – SWING</title>
   <style>
+    /* ── Themes ── */
     :root {
-      color-scheme: light;
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-soft: #eef2f7;
-      --border: #d8e0ea;
-      --text: #111827;
-      --muted: #5b6575;
-      --accent: #2563eb;
-      --accent-weak: #dbeafe;
-      --success: #15803d;
-      --success-weak: #dcfce7;
-      --danger: #b91c1c;
-      --danger-weak: #fee2e2;
-      --warning: #92400e;
-      --warning-weak: #fef3c7;
-      --shadow: 0 10px 30px rgba(15,23,42,0.08);
-      --radius: 20px;
-    }
-    :root[data-theme='dark'] {
       color-scheme: dark;
       --bg: #0f172a;
       --surface: #111827;
@@ -38,10 +20,44 @@
       --success-weak: #12311f;
       --danger: #f87171;
       --danger-weak: #2b1417;
-      --warning: #fbbf24;
-      --warning-weak: #2d1f04;
       --shadow: 0 12px 34px rgba(0,0,0,0.25);
+      --radius: 20px;
     }
+    :root[data-theme='light'] {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef2f7;
+      --border: #d8e0ea;
+      --text: #111827;
+      --muted: #5b6575;
+      --accent: #2563eb;
+      --accent-weak: #dbeafe;
+      --success: #15803d;
+      --success-weak: #dcfce7;
+      --danger: #b91c1c;
+      --danger-weak: #fee2e2;
+      --shadow: 0 10px 30px rgba(15,23,42,0.08);
+    }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme='dark']) {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --surface-soft: #eef2f7;
+        --border: #d8e0ea;
+        --text: #111827;
+        --muted: #5b6575;
+        --accent: #2563eb;
+        --accent-weak: #dbeafe;
+        --success: #15803d;
+        --success-weak: #dcfce7;
+        --danger: #b91c1c;
+        --danger-weak: #fee2e2;
+        --shadow: 0 10px 30px rgba(15,23,42,0.08);
+      }
+    }
+
     *, *::before, *::after { box-sizing: border-box; }
     html, body { min-height: 100%; margin: 0; }
     body {
@@ -271,11 +287,7 @@
     .start-shell { padding: 28px; }
     .start-shell h2 { margin: 0 0 10px; }
     .start-copy { color: var(--muted); margin: 0 0 22px; line-height: 1.6; }
-    .topic-list {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
+    .topic-list { display: grid; gap: 8px; margin-bottom: 24px; }
     .topic-chip {
       display: flex;
       align-items: center;
@@ -305,21 +317,18 @@
 <body>
 <div class="app-shell">
 
-  <!-- Top bar -->
   <div class="card top-bar">
     <div class="brand">SWING <span>·</span> Softwarové inženýrství</div>
-    <button class="theme-toggle" id="themeBtn">🌙 Tmavý režim</button>
+    <button class="theme-toggle" id="themeBtn" aria-label="Přepnout motiv"></button>
   </div>
 
-  <!-- Hero -->
   <div class="card hero">
     <p class="eyebrow">Cvičný test</p>
     <h1>Připrav se na zkoušku</h1>
-    <p class="hero-copy">10 otázek z klíčových témat – architektura IS, UML, testování, ITIL, ERP/CRM a životní cykly SW. Pro splnění potřebuješ alespoň <strong>6 správných odpovědí</strong>.</p>
+    <p class="hero-copy">20 otázek z klíčových témat – architektura IS, UML, testování, ITIL, ERP/CRM a životní cykly SW. Pro splnění potřebuješ alespoň <strong>12 správných odpovědí</strong> (60 %).</p>
   </div>
 
-  <!-- Stats row -->
-  <div class="card stats-row" id="statsRow">
+  <div class="card stats-row">
     <div class="stat accent">
       <span class="stat-val" id="statQ">–</span>
       <span class="stat-label">Otázka</span>
@@ -329,41 +338,38 @@
       <span class="stat-label">Správně</span>
     </div>
     <div class="stat">
-      <span class="stat-val" id="statRemain">10</span>
+      <span class="stat-val" id="statRemain">20</span>
       <span class="stat-label">Zbývá</span>
     </div>
   </div>
 
-  <!-- Progress -->
-  <div class="card progress-wrap" id="progressWrap">
+  <div class="card progress-wrap">
     <div class="progress-track">
       <div class="progress-fill" id="progressFill"></div>
     </div>
     <p class="progress-label" id="progressLabel">Zatím žádná odpověď</p>
   </div>
 
-  <!-- Start screen -->
   <div class="card start-shell" id="startScreen">
-    <h2>O čem budeš zkoušen?</h2>
-    <p class="start-copy">Test pokrývá nejčastěji zkoušená témata. Každá otázka má jednu správnou odpověď. Po odpovědi okamžitě uvidíš vysvětlení.</p>
+    <h2>Co tě čeká?</h2>
+    <p class="start-copy">20 otázek, vždy jedna správná odpověď. Odpovědi se zamíchají při každém spuštění. Po každé odpovědi okamžitě uvidíš vysvětlení.</p>
     <div class="topic-list">
-      <div class="topic-chip"><span class="dot"></span>Globální architektura IS – 7 dílčích architektur</div>
-      <div class="topic-chip"><span class="dot"></span>UML diagramy – vazby v diagramu tříd</div>
-      <div class="topic-chip"><span class="dot"></span>ITIL – incident vs. problém, SLA, CMDB</div>
+      <div class="topic-chip"><span class="dot"></span>Globální architektura IS – 7 dílčích architektur, DFD, E-R</div>
+      <div class="topic-chip"><span class="dot"></span>UML diagramy – vazby, typy, sekvenční diagram</div>
+      <div class="topic-chip"><span class="dot"></span>ITIL – incident vs. problém, SLA, CMDB, verze 3 vs 4</div>
       <div class="topic-chip"><span class="dot"></span>CASE nástroje – dělení dle integrace a fáze projektu</div>
-      <div class="topic-chip"><span class="dot"></span>ERP a CRM – dělení a oblasti</div>
-      <div class="topic-chip"><span class="dot"></span>Životní cyklus SW – RUP, Vodopád, Agile</div>
-      <div class="topic-chip"><span class="dot"></span>Testování – typy testů, Test Case, pyramida</div>
-      <div class="topic-chip"><span class="dot"></span>Use Case diagramy – extend vs. include</div>
-      <div class="topic-chip"><span class="dot"></span>Sekvenční diagram – typy zpráv</div>
-      <div class="topic-chip"><span class="dot"></span>BI, ETL a outsourcing</div>
+      <div class="topic-chip"><span class="dot"></span>ERP a CRM – dělení, oblasti, příklady</div>
+      <div class="topic-chip"><span class="dot"></span>Životní cyklus SW – RUP fáze a milníky, vodopád vs agile</div>
+      <div class="topic-chip"><span class="dot"></span>Testování – typy testů, pyramida, Test Case, unit testy</div>
+      <div class="topic-chip"><span class="dot"></span>Use Case diagramy – extend vs. include, elementy</div>
+      <div class="topic-chip"><span class="dot"></span>Architektury – SOA, P2P, vícevrstvé, komponenty a konektory</div>
+      <div class="topic-chip"><span class="dot"></span>BI, ETL, SCM, outsourcing, podnikový proces</div>
     </div>
     <button class="btn primary" id="startBtn">Začít test →</button>
   </div>
 
-  <!-- Quiz shell -->
   <div class="card quiz-shell hidden" id="quizShell">
-    <div class="question-num" id="questionNum">Otázka 1 / 10</div>
+    <div class="question-num" id="questionNum">Otázka 1 / 20</div>
     <div class="question-card">
       <p class="question-text" id="questionText"></p>
       <div class="option-list" id="optionList"></div>
@@ -378,7 +384,6 @@
     </div>
   </div>
 
-  <!-- Summary -->
   <div class="card summary-shell hidden" id="summaryShell">
     <h2 id="summaryTitle">Výsledky testu</h2>
     <p class="summary-copy" id="summaryDesc"></p>
@@ -408,9 +413,11 @@
 </div>
 
 <script>
-const PASS_THRESHOLD = 6; // počet správných pro splnění
+const TOTAL = 20;
+const PASS_THRESHOLD = 12;
 
 const QUESTIONS_BANK = [
+  // ── Architektura IS ──
   {
     q: "Kolik dílčích architektur obsahuje globální architektura informačního systému?",
     options: ["5", "6", "7", "8"],
@@ -418,34 +425,184 @@ const QUESTIONS_BANK = [
     explain: "Globální architektura obsahuje 7 dílčích architektur: Procesní, Funkční, Datová, Technologická, Softwarová, Hardwarová a Aplikační."
   },
   {
-    q: "Která vazba v diagramu tříd vyjadřuje vztah, kdy jeden objekt NEMŮŽE existovat bez druhého (silnější závislost)?",
-    options: ["Asociace", "Agregace", "Kompozice", "Dědičnost"],
-    correct: 2,
-    explain: "Kompozice = silné vlastnictví, části nemohou existovat bez celku (např. Automobil a Motor). Agregace naopak povoluje existenci obou stran nezávisle (např. Knihovna a Knihy)."
+    q: "Na kterou dílčí architekturu IS se používá nástroj DFD (Data Flow Diagram)?",
+    options: ["Datová architektura", "Funkční architektura", "Procesní architektura", "Aplikační architektura"],
+    correct: 1,
+    explain: "DFD se používá ve Funkční architektuře, která řeší hierarchický rozpad požadovaných funkcí a služeb IS. Datová architektura používá E-R diagram."
   },
   {
-    q: "Jaký je hlavní rozdíl mezi incidentem a problémem v rámci ITIL?",
+    q: "Na kterou dílčí architekturu IS se používá E-R diagram?",
+    options: ["Funkční architektura", "Procesní architektura", "Datová architektura", "Technologická architektura"],
+    correct: 2,
+    explain: "E-R diagram je nástrojem Datové architektury – slouží pro návrh datových entit, jejich vazeb a atributů."
+  },
+  {
+    q: "Jaký je rozdíl mezi vrstvou v architektuře a fyzickou topologií?",
+    options: [
+      "Vrstva i topologie popisují fyzické uspořádání sítě.",
+      "Vrstva je logické rozdělení komponent (např. prezentační, aplikační, datová); topologie popisuje fyzické uspořádání síťových uzlů (např. hvězdicová).",
+      "Topologie je součástí funkční architektury; vrstva patří do datové architektury.",
+      "Oba pojmy jsou synonyma pro třívrstvou architekturu."
+    ],
+    correct: 1,
+    explain: "Vrstva = logická abstrakce (jak jsou funkce rozděleny). Topologie = fyzické zapojení HW uzlů. Například e-shop má třívrstvou architekturu na hvězdicové síti."
+  },
+
+  // ── UML ──
+  {
+    q: "Která vazba v diagramu tříd vyjadřuje vztah, kdy jeden objekt NEMŮŽE existovat bez druhého?",
+    options: ["Asociace", "Agregace", "Kompozice", "Dědičnost"],
+    correct: 2,
+    explain: "Kompozice = silné vlastnictví; části nemohou existovat bez celku (Automobil–Motor). Agregace povoluje samostatnou existenci (Knihovna–Knihy)."
+  },
+  {
+    q: "Sekvenční diagram používá tři typy zpráv. Která odpovídá ASYNCHRONNÍ zprávě?",
+    options: [
+      "Plná čára s plnou šipkou",
+      "Čára s otevřenou (nekompletní) šipkou",
+      "Přerušovaná čára s návratovou šipkou",
+      "Čára s čtverečkem na konci"
+    ],
+    correct: 1,
+    explain: "Synchronní = plná čára s plnou šipkou (odesílatel čeká). Asynchronní = čára s otevřenou šipkou (odesílatel nečeká). Návratová = přerušovaná čára."
+  },
+  {
+    q: "K čemu slouží Activity diagram v UML?",
+    options: [
+      "Zobrazuje fyzické nasazení komponent na serverech.",
+      "Popisuje chování podnikového procesu jako sekvenci aktivit a rozhodnutí.",
+      "Modeluje stavy objektu a přechody mezi nimi.",
+      "Ukazuje závislosti mezi softwarovými komponentami."
+    ],
+    correct: 1,
+    explain: "Activity diagram popisuje tok aktivit v podnikovém procesu. Deployment diagram = fyzické nasazení, Statechart = stavy objektu, Component diagram = závislosti komponent."
+  },
+
+  // ── Use Case ──
+  {
+    q: "Vztah <<include>> v Use Case diagramu znamená, že zahrnutá funkcionalita je...",
+    options: [
+      "volitelná a nemusí být vždy vyvolána.",
+      "povinná – základní UC ji vždy potřebuje ke svému dokončení.",
+      "zděděná od nadřazeného UC.",
+      "dostupná pouze administrátorům."
+    ],
+    correct: 1,
+    explain: "<<include>> = povinné zahrnutí (např. 'Zpracování objednávky' vždy zahrnuje 'Ověření dostupnosti zboží'). <<extend>> je volitelné rozšíření za určitých podmínek."
+  },
+
+  // ── ITIL ──
+  {
+    q: "Jaký je hlavní rozdíl mezi incidentem a problémem v ITIL?",
     options: [
       "Incident je plánovaná událost, problém je neplánovaná.",
       "Incident je jedna neplánovaná událost narušující provoz; problém je příčina nebo potenciální příčina jednoho či více incidentů.",
-      "Problém se řeší okamžitě, incident se plánuje na příští sprint.",
-      "Incident a problém jsou v ITIL synonyma."
+      "Incident a problém jsou v ITIL synonyma.",
+      "Problém se vždy řeší automaticky, incident vyžaduje manuální zásah."
     ],
     correct: 1,
     explain: "Incident Management obnovuje provoz co nejrychleji. Problem Management hledá kořenovou příčinu, eviduje workaroundy a zabraňuje opakování incidentů."
   },
   {
-    q: "CASE nástroje se dle stupně integrace dělí na Tools, Workbenches a třetí skupinu. Jak se třetí skupina jmenuje?",
-    options: ["Frameworks", "Environments", "Platforms", "Suites"],
-    correct: 1,
-    explain: "Dělení dle integrace: Tools (jednoduché nástroje), Workbenches (více spolupracujících nástrojů), Environments (pokrytí celého procesu vývoje)."
+    q: "ITIL v3 definuje životní cyklus IT služby pomocí knih. Která kniha se zabývá PŘECHODEM služby do produkčního prostředí?",
+    options: ["Service Strategy", "Service Design", "Service Transition", "Service Operation"],
+    correct: 2,
+    explain: "Service Transition = předání IT služby do byznys prostředí (tranzice do produkce). Service Operation pak udržuje již nasazenou službu."
   },
   {
-    q: "Ve které fázi metodiky RUP se stabilizuje architektura systému a jejím milníkem je LCA (Lifecycle Architecture Milestone)?",
-    options: ["Inception", "Elaboration", "Construction", "Transition"],
+    q: "Co je SLA v kontextu ITIL?",
+    options: [
+      "Softwarová licenční smlouva mezi dodavatelem a uživatelem.",
+      "Smlouva mezi zákazníkem a IT firmou o parametrech a ceně dodávané IT služby.",
+      "Systémový log pro analýzu incidentů.",
+      "Standard pro dokumentaci softwarových požadavků."
+    ],
     correct: 1,
-    explain: "Elaboration: analýza, návrh a stabilizace architektury. Identifikují se největší rizika. Milník = LCA. Inception má milník LOM, Construction IOC, Transition PRM."
+    explain: "SLA (Service Level Agreement) = smlouva definující parametry služby (dostupnost, čas odezvy atd.) a její cenu. Slouží jako ochrana pro obě strany."
   },
+
+  // ── CASE nástroje ──
+  {
+    q: "CASE nástroje se dle stupně integrace dělí na Tools, Workbenches a třetí skupinu. Jak se jmenuje?",
+    options: ["Frameworks", "Environments", "Platforms", "Suites"],
+    correct: 1,
+    explain: "Tools = jednoduché nástroje (editory, kompilátory). Workbenches = více spolupracujících nástrojů. Environments = pokrytí celého procesu vývoje."
+  },
+  {
+    q: "Který CASE nástroj patří do skupiny Lower CASE (dle dělení podle životního cyklu projektu)?",
+    options: [
+      "Nástroje pro tvorbu globální strategie",
+      "Nástroje pro modelování organizace a DFD",
+      "Nástroje pro kódování, testování, reverzní inženýrství a sledování metrik",
+      "Nástroje pro zavedení a organizační řízení projektu"
+    ],
+    correct: 2,
+    explain: "Lower CASE podporuje implementační fázi: generátory kódu, nástroje pro testování, reverzní inženýrství a sledování metrik kvality SW."
+  },
+
+  // ── ERP / CRM / SCM ──
+  {
+    q: "ERP systémy se dle velikosti dělí do tří kategorií. Která pokrývá VŠECHNY oblasti hlavních interních procesů (výroba, logistika, HR, ekonomika)?",
+    options: ["Lite ERP (TIER III)", "Best-of-breed ERP (TIER II)", "All-in-one ERP (TIER I)", "Modular ERP"],
+    correct: 2,
+    explain: "All-in-one ERP (TIER I), např. SAP, integruje všechny klíčové oblasti. Best-of-breed se specializuje na jedno odvětví, Lite ERP je odlehčená verze pro SMB."
+  },
+  {
+    q: "Na kolik skupin se dělí CRM systémy a jak se jmenují?",
+    options: [
+      "2 skupiny: Operativní a Analytické",
+      "3 skupiny: Operativní, Analytické a Kolaborativní",
+      "4 skupiny: Operativní, Analytické, Kolaborativní a Strategické",
+      "3 skupiny: Strategické, Taktické a Operativní"
+    ],
+    correct: 1,
+    explain: "CRM se dělí na: Operativní (front-office, správa kontaktů), Analytické (analýza dat, marketing) a Kolaborativní (koordinace kanálů, reklamace). Zkratka: K.A.O."
+  },
+
+  // ── Životní cyklus SW ──
+  {
+    q: "Ve které fázi metodiky RUP se stabilizuje architektura systému? Jaký je milník této fáze?",
+    options: [
+      "Inception – milník LOM",
+      "Elaboration – milník LCA",
+      "Construction – milník IOC",
+      "Transition – milník PRM"
+    ],
+    correct: 1,
+    explain: "Elaboration stabilizuje architekturu a identifikuje největší rizika. Milník = LCA (Lifecycle Architecture Milestone). Inception=LOM, Construction=IOC, Transition=PRM."
+  },
+  {
+    q: "Jaký je hlavní problém vodopádového modelu vývoje SW?",
+    options: [
+      "Příliš mnoho iterací prodlužuje dodání produktu.",
+      "Testování a integrace probíhají až na konci; změny požadavků jsou velmi nákladné.",
+      "Neumožňuje zapojení zákazníka do vývoje.",
+      "Nepodporuje objektově orientované programování."
+    ],
+    correct: 1,
+    explain: "Vodopád testuje až na konci, takže chyby ze specifikace se projeví pozdě a jsou drahé. Nepočítá s rizikem ani se změnami požadavků v průběhu projektu."
+  },
+
+  // ── Testování ──
+  {
+    q: "Která úroveň testovací pyramidy (Good Practice) tvoří základ a měla by být nejpočetnější?",
+    options: ["Manuální testy", "GUI testy", "Automatizované unit testy", "Akceptační testy"],
+    correct: 2,
+    explain: "Základ pyramidy = automatizované unit testy. Rychle odhalí programátorské chyby na nejnižší úrovni. Výše jsou API/integrační a GUI testy, na vrcholu manuální."
+  },
+  {
+    q: "Co jsou to Smoke testy?",
+    options: [
+      "Testy bezpečnosti zaměřené na SQL injection a XSS.",
+      "Testy klíčových hraničních rozhraní prováděné na větším software, aby se rychle odhalily kritické chyby bez čekání na kompletní testování.",
+      "Testy, které simulují zátěž stovek souběžných uživatelů.",
+      "Testy dokumentace a srozumitelnosti uživatelské příručky."
+    ],
+    correct: 1,
+    explain: "Smoke testy se provádějí u rozsáhlejšího software (testování může trvat hodiny). Programátor vytipuje klíčová rozhraní – pokud tam chyba je, rychle ji opraví bez čekání na celý test suite."
+  },
+
+  // ── Různé ──
   {
     q: "Co znamená zkratka ETL v kontextu Business Intelligence?",
     options: [
@@ -455,41 +612,18 @@ const QUESTIONS_BANK = [
       "Extended Testing Library"
     ],
     correct: 1,
-    explain: "ETL (Extract, Transform, Load) je proces získávání dat z různých zdrojů, jejich transformace do vhodného formátu a nahrání do datového skladu."
+    explain: "ETL (Extract, Transform, Load) = proces získávání dat z různých zdrojů, jejich transformace do vhodného formátu a nahrání do datového skladu."
   },
   {
-    q: "Která úroveň testovací pyramidy (Good Practice) tvoří její základ a měla by být nejrozšířenější?",
-    options: ["Manuální testy", "GUI testy", "Automatizované unit testy", "Akceptační testy"],
-    correct: 2,
-    explain: "Základem pyramidy jsou automatizované unit testy – rychle odhalí programátorské chyby. Výše jsou integrační, API a GUI testy, na vrcholu manuální testy."
-  },
-  {
-    q: "Vztah <<include>> v Use Case diagramu znamená, že...",
+    q: "Napster (sdílení MP3) je příkladem které P2P architektury?",
     options: [
-      "zahrnutá funkcionalita je volitelná a nemusí být vždy vyvolána.",
-      "zahrnutá funkcionalita je povinná – základní UC ji vždy potřebuje ke svému dokončení.",
-      "jeden UC dědí chování od jiného UC.",
-      "UC může přidávat nové chování pouze za určitých podmínek."
+      "Decentralizovaná P2P (bez centrálního uzlu)",
+      "Centralizovaná P2P (s centrálním indexovacím serverem)",
+      "Hybridní P2P (kombinace superuzlů a běžných uzlů)",
+      "Hierarchická P2P (uzly v stromové struktuře)"
     ],
     correct: 1,
-    explain: "<<include>> = povinné zahrnutí; základní UC bez něj nelze dokončit (např. 'Zpracování objednávky' vždy zahrnuje 'Ověření dostupnosti zboží'). <<extend>> je naopak volitelné rozšíření."
-  },
-  {
-    q: "ERP systémy se dle velikosti dělí do tří kategorií (TIER I–III). Která kategorie pokrývá a integruje VŠECHNY oblasti hlavních interních procesů?",
-    options: ["Lite ERP (TIER III)", "Best-of-breed ERP (TIER II)", "All-in-one ERP (TIER I)", "Modular ERP (TIER IV)"],
-    correct: 2,
-    explain: "All-in-one ERP (TIER I) – např. SAP – integruje výrobu, logistiku, personalistiku i ekonomiku. Best-of-breed se specializuje, Lite ERP je odlehčená verze pro SMB."
-  },
-  {
-    q: "Sekvenční diagram v UML používá tři typy zpráv. Která z následujících odpovídá ASYNCHRONNÍ zprávě?",
-    options: [
-      "Plná čára s plnou šipkou",
-      "Čára s otevřenou (nekompletní) šipkou",
-      "Přerušovaná čára s návratovou šipkou",
-      "Čára s čtverečkem na konci"
-    ],
-    correct: 1,
-    explain: "Synchronní zpráva = plná čára s plnou šipkou (odesílatel čeká na odpověď). Asynchronní zpráva = čára s otevřenou šipkou (odesílatel nečeká). Návratová zpráva = přerušovaná čára."
+    explain: "Napster = Centralizovaná P2P (centrální server indexoval soubory, samotné sdílení bylo P2P). Gnutella = Decentralizovaná P2P. Skype/SuperNodes = Hybridní P2P."
   }
 ];
 
@@ -497,7 +631,6 @@ let questions = [];
 let current = 0;
 let score = 0;
 let answered = [];
-let skipped = 0;
 
 function shuffle(arr) {
   const a = [...arr];
@@ -508,15 +641,14 @@ function shuffle(arr) {
   return a;
 }
 
-function init(reshuffleOptions = true) {
-  questions = shuffle(QUESTIONS_BANK).map(q => {
-    if (!reshuffleOptions) return q;
+function init() {
+  questions = shuffle(QUESTIONS_BANK).slice(0, TOTAL).map(q => {
     const indexed = q.options.map((o, i) => ({ text: o, orig: i }));
     const shuffled = shuffle(indexed);
     const newCorrect = shuffled.findIndex(o => o.orig === q.correct);
     return { ...q, options: shuffled.map(o => o.text), correct: newCorrect };
   });
-  current = 0; score = 0; answered = []; skipped = 0;
+  current = 0; score = 0; answered = [];
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('summaryShell').classList.add('hidden');
   document.getElementById('quizShell').classList.remove('hidden');
@@ -525,19 +657,24 @@ function init(reshuffleOptions = true) {
 }
 
 function updateStats() {
-  document.getElementById('statQ').textContent = current < questions.length ? `${current + 1} / 10` : '✓';
+  const total = questions.length;
+  document.getElementById('statQ').textContent = current < total ? `${current + 1} / ${total}` : '✓';
   document.getElementById('statCorrect').textContent = score;
-  document.getElementById('statRemain').textContent = questions.length - current;
-  const pct = (current / questions.length) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('statRemain').textContent = total - current;
+  document.getElementById('progressFill').style.width = (current / total * 100) + '%';
   document.getElementById('progressLabel').textContent =
-    current === 0 ? 'Zatím žádná odpověď' : `${current} z ${questions.length} zodpovězeno`;
+    current === 0 ? 'Zatím žádná odpověď' : `${current} z ${total} zodpovězeno`;
 }
 
 function renderQuestion() {
   const q = questions[current];
-  document.getElementById('questionNum').textContent = `Otázka ${current + 1} / ${questions.length}`;
+  const total = questions.length;
+  document.getElementById('questionNum').textContent = `Otázka ${current + 1} / ${total}`;
   document.getElementById('questionText').textContent = q.q;
+  document.getElementById('nextBtn').textContent = current < total - 1 ? 'Další otázka →' : 'Zobrazit výsledky →';
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('skipBtn').disabled = false;
+  document.getElementById('feedbackBox').classList.add('hidden');
 
   const list = document.getElementById('optionList');
   list.innerHTML = '';
@@ -548,11 +685,6 @@ function renderQuestion() {
     label.addEventListener('click', () => selectOption(i));
     list.appendChild(label);
   });
-
-  document.getElementById('feedbackBox').classList.add('hidden');
-  document.getElementById('nextBtn').disabled = true;
-  document.getElementById('nextBtn').textContent = current < questions.length - 1 ? 'Další otázka →' : 'Zobrazit výsledky →';
-  document.getElementById('skipBtn').disabled = false;
 }
 
 function selectOption(idx) {
@@ -561,25 +693,19 @@ function selectOption(idx) {
   items[idx].querySelector('input').checked = true;
 
   const q = questions[current];
-  const correct = q.correct;
+  const ok = idx === q.correct;
+  if (ok) score++;
+
+  items[idx].classList.add(ok ? 'is-correct' : 'is-wrong');
+  if (!ok) items[q.correct].classList.add('is-correct');
+
   const fb = document.getElementById('feedbackBox');
-
-  if (idx === correct) {
-    score++;
-    items[idx].classList.add('is-correct');
-    fb.className = 'feedback-box success';
-    document.getElementById('feedbackTitle').textContent = '✅ Správně!';
-    answered.push({ q: q.q, ok: true, chosen: q.options[idx], correct: q.options[correct], explain: q.explain });
-  } else {
-    items[idx].classList.add('is-wrong');
-    items[correct].classList.add('is-correct');
-    fb.className = 'feedback-box error';
-    document.getElementById('feedbackTitle').textContent = '❌ Špatně';
-    answered.push({ q: q.q, ok: false, chosen: q.options[idx], correct: q.options[correct], explain: q.explain });
-  }
-
+  fb.className = `feedback-box ${ok ? 'success' : 'error'}`;
+  document.getElementById('feedbackTitle').textContent = ok ? '✅ Správně!' : '❌ Špatně';
   document.getElementById('feedbackText').textContent = q.explain;
   fb.classList.remove('hidden');
+
+  answered.push({ q: q.q, ok, chosen: q.options[idx], correct: q.options[q.correct], explain: q.explain });
   document.getElementById('nextBtn').disabled = false;
   document.getElementById('skipBtn').disabled = true;
   updateStats();
@@ -595,7 +721,6 @@ function nextQuestion() {
 function skipQuestion() {
   const q = questions[current];
   answered.push({ q: q.q, ok: false, chosen: '(přeskočeno)', correct: q.options[q.correct], explain: q.explain });
-  skipped++;
   current++;
   if (current >= questions.length) { showSummary(); return; }
   updateStats();
@@ -608,23 +733,22 @@ function showSummary() {
   updateStats();
 
   const total = questions.length;
-  const wrong = total - score;
-  const pct = Math.round((score / total) * 100);
+  const pct = Math.round(score / total * 100);
   const pass = score >= PASS_THRESHOLD;
 
   document.getElementById('sumCorrect').textContent = score;
-  document.getElementById('sumWrong').textContent = wrong;
+  document.getElementById('sumWrong').textContent = total - score;
   document.getElementById('sumPct').textContent = pct + ' %';
 
   const badge = document.getElementById('resultBadge');
   if (pass) {
     badge.innerHTML = `<span class="result-badge pass">✅ Splněno – ${score}/${total} správně</span>`;
     document.getElementById('summaryTitle').textContent = 'Gratulujeme! Test splněn.';
-    document.getElementById('summaryDesc').textContent = `Dosáhl jsi ${pct} % úspěšnosti. Ke splnění stačilo ${PASS_THRESHOLD} správných odpovědí.`;
+    document.getElementById('summaryDesc').textContent = `Dosáhl jsi ${pct} % úspěšnosti. Ke splnění bylo potřeba ${PASS_THRESHOLD}/${total} správných odpovědí.`;
   } else {
     badge.innerHTML = `<span class="result-badge fail">❌ Nesplněno – ${score}/${total} správně</span>`;
     document.getElementById('summaryTitle').textContent = 'Test nesplněn – nevzdávej to!';
-    document.getElementById('summaryDesc').textContent = `Dosáhl jsi ${pct} % úspěšnosti. Ke splnění potřebuješ alespoň ${PASS_THRESHOLD} správných odpovědí. Zkus to znovu!`;
+    document.getElementById('summaryDesc').textContent = `Dosáhl jsi ${pct} % úspěšnosti. Ke splnění potřebuješ alespoň ${PASS_THRESHOLD}/${total} správných odpovědí.`;
   }
 
   const list = document.getElementById('reviewList');
@@ -646,31 +770,50 @@ function showSummary() {
   });
 }
 
-// ── Event listeners ──
-document.getElementById('startBtn').addEventListener('click', () => init());
+document.getElementById('startBtn').addEventListener('click', init);
 document.getElementById('nextBtn').addEventListener('click', nextQuestion);
 document.getElementById('skipBtn').addEventListener('click', skipQuestion);
 document.getElementById('retryBtn').addEventListener('click', () => {
   document.getElementById('summaryShell').classList.add('hidden');
-  document.getElementById('quizShell').classList.remove('hidden');
   init();
 });
 document.getElementById('shuffleBtn').addEventListener('click', () => {
   document.getElementById('summaryShell').classList.add('hidden');
-  document.getElementById('quizShell').classList.remove('hidden');
   init();
 });
 
 // ── Theme ──
-const themeBtn = document.getElementById('themeBtn');
-let dark = localStorage.getItem('swingTheme') === 'dark';
-function applyTheme() {
-  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-  themeBtn.textContent = dark ? '☀️ Světlý režim' : '🌙 Tmavý režim';
-  localStorage.setItem('swingTheme', dark ? 'dark' : 'light');
+// Priorita: 1. uložená preference, 2. systémové nastavení, 3. default dark
+const THEMES = ['dark', 'light', 'system'];
+const ICONS  = { dark: '🌙', light: '☀️', system: '💻' };
+const LABELS = { dark: 'Tmavý', light: 'Světlý', system: 'Systém' };
+
+function getSystemTheme() {
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
-themeBtn.addEventListener('click', () => { dark = !dark; applyTheme(); });
-applyTheme();
+
+function applyTheme(pref) {
+  const effective = pref === 'system' ? getSystemTheme() : pref;
+  if (effective === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  document.getElementById('themeBtn').textContent = `${ICONS[pref]} ${LABELS[pref]}`;
+  localStorage.setItem('swingTheme', pref);
+}
+
+let currentTheme = localStorage.getItem('swingTheme') || 'dark';
+applyTheme(currentTheme);
+
+document.getElementById('themeBtn').addEventListener('click', () => {
+  currentTheme = THEMES[(THEMES.indexOf(currentTheme) + 1) % THEMES.length];
+  applyTheme(currentTheme);
+});
+
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  if (currentTheme === 'system') applyTheme('system');
+});
 </script>
 </body>
 </html>
